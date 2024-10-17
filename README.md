@@ -1,6 +1,6 @@
 # Azure Orphaned Resources v2.0
 
-The _'Azure Orphaned Resources Workbook'_ centralize orphaned resources in Azure environments.
+The _'Azure Orphaned Resources Workbook'_ centralize orphaned resources in Azure environments....
 
 The purpose of this workbook is to provide an overview of your orphaned resources, enabling you to enhance eficiency by:
 - Saving money

@@ -1156,6 +1156,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -1413,6 +1414,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -1740,6 +1742,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -2089,6 +2092,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -2542,6 +2546,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -3070,6 +3075,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -3311,6 +3317,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -3821,6 +3828,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -4049,6 +4057,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -4311,6 +4320,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -4601,6 +4611,7 @@
                             }
                           ],
                           "showExportToExcel": true,
+                          "exportToExcelOptions": "all",
                           "queryType": 1,
                           "resourceType": "microsoft.resourcegraph/resources",
                           "crossComponentResources": [
@@ -4863,6 +4874,7 @@
                             }
                           ],
                           "showExportToExcel": true,
+                          "exportToExcelOptions": "all",
                           "queryType": 1,
                           "resourceType": "microsoft.resourcegraph/resources",
                           "crossComponentResources": [
@@ -5209,6 +5221,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -5466,6 +5479,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -5707,6 +5721,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -5998,6 +6013,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -6353,6 +6369,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -6796,6 +6813,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -7085,6 +7103,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -7318,6 +7337,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [
@@ -7713,6 +7733,7 @@
                       }
                     ],
                     "showExportToExcel": true,
+                    "exportToExcelOptions": "all",
                     "queryType": 1,
                     "resourceType": "microsoft.resourcegraph/resources",
                     "crossComponentResources": [

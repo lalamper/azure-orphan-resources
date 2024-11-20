@@ -1143,7 +1143,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.web/serverfarms\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.numberOfSites == 0\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, SKU=sku.name, Tier=sku.tier, tags ,Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.web/serverfarms\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.numberOfSites == 0\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, SKU=sku.name, Tier=sku.tier, tags ,Details",
                     "size": 3,
                     "title": "Orphaned App Service Plans",
                     "noDataMessage": "No orphaned App Service Plans found.",
@@ -1179,6 +1179,10 @@
                         },
                         {
                           "columnMatch": "Resource",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "ResourceName",
                           "formatter": 5
                         },
                         {
@@ -1221,6 +1225,10 @@
                         {
                           "columnId": "Resource",
                           "label": "Resource"
+                        },
+                        {
+                          "columnId": "ResourceName",
+                          "label": "Resource Name"
                         },
                         {
                           "columnId": "resourceGroup",
@@ -1401,7 +1409,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "Resources\r\n| where type =~ 'microsoft.compute/availabilitysets'\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.virtualMachines == \"[]\"\r\n| where not(name endswith \"-asr\")\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "Resources\r\n| where type =~ 'microsoft.compute/availabilitysets'\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.virtualMachines == \"[]\"\r\n| where not(name endswith \"-asr\")\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned Availability Set",
                     "noDataMessage": "No orphaned Availability Set found.",
@@ -1439,6 +1447,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -1729,7 +1741,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "Resources\r\n| where type =~ \"microsoft.compute/disks\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend diskState = tostring(properties.diskState)\r\n| where managedBy == \"\" or diskState == 'Unattached'\r\n| where not(name endswith \"-ASRReplica\" or name startswith \"ms-asr-\" or name startswith \"asrseeddisk-\")\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, diskType=sku.name, diskSizeGB=properties.diskSizeGB, timeCreated=properties.timeCreated, tags, Details\r\n",
+                    "query": "Resources\r\n| where type =~ \"microsoft.compute/disks\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend diskState = tostring(properties.diskState)\r\n| where managedBy == \"\" or diskState == 'Unattached'\r\n| where not(name endswith \"-ASRReplica\" or name startswith \"ms-asr-\" or name startswith \"asrseeddisk-\")\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, diskType=sku.name, diskSizeGB=properties.diskSizeGB, timeCreated=properties.timeCreated, tags, Details\r\n",
                     "size": 3,
                     "title": "Orphaned Managed Disks",
                     "noDataMessage": "No orphaned Managed Disks found.",
@@ -1767,6 +1779,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -2533,7 +2549,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "Resources\r\n| where type =~ \"microsoft.network/publicipaddresses\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.ipConfiguration == \"\" and properties.natGateway == \"\" and properties.publicIPPrefix == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, Type=tostring(sku.name), AllocationMethod=tostring(properties.publicIPAllocationMethod), tags, Details",
+                    "query": "Resources\r\n| where type =~ \"microsoft.network/publicipaddresses\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.ipConfiguration == \"\" and properties.natGateway == \"\" and properties.publicIPPrefix == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, Type=tostring(sku.name), AllocationMethod=tostring(properties.publicIPAllocationMethod), tags, Details",
                     "size": 3,
                     "title": "Orphaned Public IPs",
                     "noDataMessage": "No orphaned Public IPs found.",
@@ -2571,6 +2587,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -2812,7 +2832,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "Resources\r\n| where type =~ \"microsoft.network/networkinterfaces\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.privateEndpoint)\r\n| where isnull(properties.privateLinkService)\r\n| where properties.hostedWorkloads == \"[]\"\r\n| where properties !has 'virtualmachine'\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, kind, tags, Details",
+                    "query": "Resources\r\n| where type =~ \"microsoft.network/networkinterfaces\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.privateEndpoint)\r\n| where isnull(properties.privateLinkService)\r\n| where properties.hostedWorkloads == \"[]\"\r\n| where properties !has 'virtualmachine'\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, kind, tags, Details",
                     "size": 3,
                     "title": "Orphaned Network Interfaces",
                     "noDataMessage": "No orphaned Network Interfaces found.",
@@ -2850,6 +2870,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -3062,7 +3086,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "Resources\r\n| where type =~ \"microsoft.network/networksecuritygroups\" and isnull(properties.networkInterfaces) and isnull(properties.subnets)\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "Resources\r\n| where type =~ \"microsoft.network/networksecuritygroups\" and isnull(properties.networkInterfaces) and isnull(properties.subnets)\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned Network Security Group",
                     "noDataMessage": "No orphaned NSGs found.",
@@ -3100,6 +3124,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -3304,7 +3332,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/routetables\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.subnets)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/routetables\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.subnets)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned Route Tables",
                     "noDataMessage": "No orphaned Route Tables found.",
@@ -3342,6 +3370,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -3815,7 +3847,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/frontdoorwebapplicationfirewallpolicies\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.frontendEndpointLinks == \"[]\" and properties.securityPolicyLinks == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, SKU=sku.name, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/frontdoorwebapplicationfirewallpolicies\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.frontendEndpointLinks == \"[]\" and properties.securityPolicyLinks == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, SKU=sku.name, tags, Details",
                     "size": 3,
                     "title": "Orphaned Front Door WAF Policy",
                     "noDataMessage": "No orphaned Front Door WAF Policy found.",
@@ -3853,6 +3885,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -4044,7 +4080,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/trafficmanagerprofiles\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.endpoints == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/trafficmanagerprofiles\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.endpoints == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned Traffic Managers",
                     "noDataMessage": "No orphaned Traffic Managers found.",
@@ -4082,6 +4118,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -4307,7 +4347,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/applicationgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend backendPoolsCount = array_length(properties.backendAddressPools),SKUName= tostring(properties.sku.name), SKUTier= tostring(properties.sku.tier),SKUCapacity=properties.sku.capacity,backendPools=properties.backendAddressPools , AppGwId = tostring(id)\r\n| project subscriptionId, AppGwId, resourceGroup, location, tags, name, SKUName, SKUTier, SKUCapacity\r\n| join (\r\n    resources\r\n    | where type =~ \"microsoft.network/applicationgateways\"\r\n    | mvexpand backendPools = properties.backendAddressPools\r\n    | extend backendIPCount = array_length(backendPools.properties.backendIPConfigurations)\r\n    | extend backendAddressesCount = array_length(backendPools.properties.backendAddresses)\r\n    | extend backendPoolName  = backendPools.properties.backendAddressPools.name\r\n    | extend AppGwId = tostring(id)\r\n    | summarize backendIPCount = sum(backendIPCount) ,backendAddressesCount=sum(backendAddressesCount) by AppGwId\r\n) on AppGwId\r\n| project-away AppGwId1\r\n| where  (backendIPCount == 0 or isempty(backendIPCount)) and (backendAddressesCount==0 or isempty(backendAddressesCount))\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=AppGwId, resourceGroup, location, SKUTier, SKUCapacity, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/applicationgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend backendPoolsCount = array_length(properties.backendAddressPools),SKUName= tostring(properties.sku.name), SKUTier= tostring(properties.sku.tier),SKUCapacity=properties.sku.capacity,backendPools=properties.backendAddressPools , AppGwId = tostring(id)\r\n| project subscriptionId, AppGwId, resourceGroup, location, tags, name, SKUName, SKUTier, SKUCapacity\r\n| join (\r\n    resources\r\n    | where type =~ \"microsoft.network/applicationgateways\"\r\n    | mvexpand backendPools = properties.backendAddressPools\r\n    | extend backendIPCount = array_length(backendPools.properties.backendIPConfigurations)\r\n    | extend backendAddressesCount = array_length(backendPools.properties.backendAddresses)\r\n    | extend backendPoolName  = backendPools.properties.backendAddressPools.name\r\n    | extend AppGwId = tostring(id)\r\n    | summarize backendIPCount = sum(backendIPCount) ,backendAddressesCount=sum(backendAddressesCount) by AppGwId\r\n) on AppGwId\r\n| project-away AppGwId1\r\n| where  (backendIPCount == 0 or isempty(backendIPCount)) and (backendAddressesCount==0 or isempty(backendAddressesCount))\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=AppGwId, ResourceName=name, resourceGroup, location, SKUTier, SKUCapacity, tags, Details",
                     "size": 3,
                     "title": "Orphaned Application Gateway",
                     "noDataMessage": "No orphaned Application Gateway found.",
@@ -4345,6 +4385,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -4598,7 +4642,7 @@
                         "type": 3,
                         "content": {
                           "version": "KqlItem/1.0",
-                          "query": "resources\r\n| where type =~ \"microsoft.network/virtualnetworks\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.subnets == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                          "query": "resources\r\n| where type =~ \"microsoft.network/virtualnetworks\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.subnets == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                           "size": 3,
                           "title": "Orphaned Virtual Networks",
                           "noDataMessage": "No orphaned Virtual Networks found.",
@@ -4636,6 +4680,10 @@
                                 "columnMatch": "Resource",
                                 "formatter": 5
                               },
+                              {
+                                "columnMatch": "ResourceName",
+                                "formatter": 5
+                              },                              
                               {
                                 "columnMatch": "location",
                                 "formatter": 17
@@ -5208,7 +5256,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/natgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.subnets)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, Sku=tostring(sku.name), Tier=tostring(sku.tier), tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/natgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.subnets)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, Sku=tostring(sku.name), Tier=tostring(sku.tier), tags, Details",
                     "size": 3,
                     "title": "Orphaned NAT Gateways",
                     "noDataMessage": "No orphaned NAT Gateways found.",
@@ -5246,6 +5294,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -5466,7 +5518,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/ipgroups\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.firewalls == \"[]\" and properties.firewallPolicies == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/ipgroups\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.firewalls == \"[]\" and properties.firewallPolicies == \"[]\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned IP Groups",
                     "noDataMessage": "No orphaned IP Groups found.",
@@ -5504,6 +5556,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -5708,7 +5764,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/privatednszones\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.numberOfVirtualNetworkLinks == 0\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, NumberOfRecordSets=properties.numberOfRecordSets, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/privatednszones\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where properties.numberOfVirtualNetworkLinks == 0\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, NumberOfRecordSets=properties.numberOfRecordSets, tags, Details",
                     "size": 3,
                     "title": "Orphaned Private DNS zones",
                     "noDataMessage": "No orphaned Private DNS zones found.",
@@ -5746,6 +5802,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -6000,7 +6060,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/privateendpoints\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend connection = iff(array_length(properties.manualPrivateLinkServiceConnections) > 0, properties.manualPrivateLinkServiceConnections[0], properties.privateLinkServiceConnections[0])\r\n| extend subnetId = properties.subnet.id\r\n| extend subnetName = tostring(split(subnetId, \"/\")[-1])\r\n| extend subnetIdSplit = split(subnetId, \"/\")\r\n| extend vnetId = strcat_array(array_slice(subnetIdSplit,0,8), \"/\")\r\n| extend vnetName = tostring(split(vnetId, \"/\")[-1])\r\n| extend serviceId = tostring(connection.properties.privateLinkServiceId)\r\n| extend serviceIdSplit = split(serviceId, \"/\")\r\n| extend serviceName = tostring(serviceIdSplit[8])\r\n| extend serviceTypeEnum = iff(isnotnull(serviceIdSplit[6]), tolower(strcat(serviceIdSplit[6], \"/\", serviceIdSplit[7])), \"microsoft.network/privatelinkservices\")\r\n| extend stateEnum = tostring(connection.properties.privateLinkServiceConnectionState.status)\r\n| extend groupIds = tostring(connection.properties.groupIds[0])\r\n| where stateEnum == \"Disconnected\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, serviceName, serviceTypeEnum, groupIds, vnetId, vnetName, subnetId, subnetName, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/privateendpoints\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend connection = iff(array_length(properties.manualPrivateLinkServiceConnections) > 0, properties.manualPrivateLinkServiceConnections[0], properties.privateLinkServiceConnections[0])\r\n| extend subnetId = properties.subnet.id\r\n| extend subnetName = tostring(split(subnetId, \"/\")[-1])\r\n| extend subnetIdSplit = split(subnetId, \"/\")\r\n| extend vnetId = strcat_array(array_slice(subnetIdSplit,0,8), \"/\")\r\n| extend vnetName = tostring(split(vnetId, \"/\")[-1])\r\n| extend serviceId = tostring(connection.properties.privateLinkServiceId)\r\n| extend serviceIdSplit = split(serviceId, \"/\")\r\n| extend serviceName = tostring(serviceIdSplit[8])\r\n| extend serviceTypeEnum = iff(isnotnull(serviceIdSplit[6]), tolower(strcat(serviceIdSplit[6], \"/\", serviceIdSplit[7])), \"microsoft.network/privatelinkservices\")\r\n| extend stateEnum = tostring(connection.properties.privateLinkServiceConnectionState.status)\r\n| extend groupIds = tostring(connection.properties.groupIds[0])\r\n| where stateEnum == \"Disconnected\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, serviceName, serviceTypeEnum, groupIds, vnetId, vnetName, subnetId, subnetName, tags, Details",
                     "size": 3,
                     "title": "Orphaned Private Endpoints",
                     "noDataMessage": "No orphaned Private Endpoints found.",
@@ -6040,6 +6100,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -6356,7 +6420,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/virtualnetworkgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend Details = pack_all()\r\n| extend SKU = tostring(properties.sku.name)\r\n| extend Tier = tostring(properties.sku.tier)\r\n| extend GatewayType = tostring(properties.gatewayType)\r\n| extend vpnClientConfiguration = properties.vpnClientConfiguration\r\n| extend Resource = id\r\n| join kind=leftouter (\r\n    resources\r\n    | where type =~ \"microsoft.network/connections\"\r\n    | mv-expand Resource = pack_array(properties.virtualNetworkGateway1.id, properties.virtualNetworkGateway2.id) to typeof(string)\r\n    | project Resource, connectionId = id, ConnectionProperties=properties\r\n    ) on Resource                  \r\n| where isempty(vpnClientConfiguration) and isempty(connectionId)\r\n| project subscriptionId, Resource, resourceGroup, location, GatewayType, SKU, Tier, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/virtualnetworkgateways\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend Details = pack_all()\r\n| extend SKU = tostring(properties.sku.name)\r\n| extend Tier = tostring(properties.sku.tier)\r\n| extend GatewayType = tostring(properties.gatewayType)\r\n| extend vpnClientConfiguration = properties.vpnClientConfiguration\r\n| extend Resource = id\r\n| join kind=leftouter (\r\n    resources\r\n    | where type =~ \"microsoft.network/connections\"\r\n    | mv-expand Resource = pack_array(properties.virtualNetworkGateway1.id, properties.virtualNetworkGateway2.id) to typeof(string)\r\n    | project Resource, connectionId = id, ConnectionProperties=properties\r\n    ) on Resource                  \r\n| where isempty(vpnClientConfiguration) and isempty(connectionId)\r\n| project subscriptionId, Resource, ResourceName=name, resourceGroup, location, GatewayType, SKU, Tier, tags, Details",
                     "size": 3,
                     "title": "Orphaned Virtual Network Gateways",
                     "noDataMessage": "No orphaned Virtual Network Gateways found.",
@@ -6394,6 +6458,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -6800,7 +6868,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.network/ddosprotectionplans\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.virtualNetworks)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.network/ddosprotectionplans\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| where isnull(properties.virtualNetworks)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned DDoS protection plans",
                     "noDataMessage": "No orphaned DDoS protection plans found.",
@@ -6838,6 +6906,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -7090,7 +7162,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "ResourceContainers\r\n| where type =~ \"microsoft.resources/subscriptions/resourcegroups\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend rgAndSub = strcat(resourceGroup, \"--\", subscriptionId)\r\n| join kind=leftouter (\r\n    Resources\r\n    | extend rgAndSub = strcat(resourceGroup, \"--\", subscriptionId)\r\n    | summarize count() by rgAndSub\r\n    ) on rgAndSub\r\n| where isnull(count_)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, tags ,Details",
+                    "query": "ResourceContainers\r\n| where type =~ \"microsoft.resources/subscriptions/resourcegroups\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend rgAndSub = strcat(resourceGroup, \"--\", subscriptionId)\r\n| join kind=leftouter (\r\n    Resources\r\n    | extend rgAndSub = strcat(resourceGroup, \"--\", subscriptionId)\r\n    | summarize count() by rgAndSub\r\n    ) on rgAndSub\r\n| where isnull(count_)\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, tags ,Details",
                     "size": 3,
                     "title": "Orphaned Resource Groups",
                     "noDataMessage": "No orphaned Resource Groups found.",
@@ -7132,6 +7204,10 @@
                           "columnMatch": "resourceGroup",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -7324,7 +7400,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.web/connections\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| project subscriptionId, Resource = id , apiName = name, resourceGroup, tags, location\r\n| join kind = leftouter (\r\n    resources\r\n    | where type =~ 'microsoft.logic/workflows'\r\n    | extend resourceGroup, location, subscriptionId, properties\r\n    | extend var_json = properties[\"parameters\"][\"$connections\"][\"value\"]\r\n\t| mvexpand var_connection = var_json\r\n    | where notnull(var_connection)\r\n    | extend connectionId = extract(\"connectionId\\\":\\\"(.*?)\\\"\", 1, tostring(var_connection))\r\n    | project connectionId, name\r\n    )\r\n    on $left.Resource == $right.connectionId\r\n| where connectionId == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.web/connections\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| project subscriptionId, Resource = id , apiName = name, resourceGroup, tags, location\r\n| join kind = leftouter (\r\n    resources\r\n    | where type =~ 'microsoft.logic/workflows'\r\n    | extend resourceGroup, location, subscriptionId, properties\r\n    | extend var_json = properties[\"parameters\"][\"$connections\"][\"value\"]\r\n\t| mvexpand var_connection = var_json\r\n    | where notnull(var_connection)\r\n    | extend connectionId = extract(\"connectionId\\\":\\\"(.*?)\\\"\", 1, tostring(var_connection))\r\n    | project connectionId, name\r\n    )\r\n    on $left.Resource == $right.connectionId\r\n| where connectionId == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource, ResourceName=name, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned API Connections",
                     "noDataMessage": "No orphaned API Connections found.",
@@ -7362,6 +7438,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17
@@ -7720,7 +7800,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.web/certificates\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend expiresOn = todatetime(properties.expirationDate)\r\n| where expiresOn <= now()\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, resourceGroup, location, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.web/certificates\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| extend expiresOn = todatetime(properties.expirationDate)\r\n| where expiresOn <= now()\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource=id, ResourceName=name, resourceGroup, location, Details",
                     "size": 3,
                     "title": "Orphaned Certificates",
                     "noDataMessage": "No orphaned Certificates found.",
@@ -7758,6 +7838,10 @@
                           "columnMatch": "Resource",
                           "formatter": 5
                         },
+                        {
+                          "columnMatch": "ResourceName",
+                          "formatter": 5
+                        },                        
                         {
                           "columnMatch": "location",
                           "formatter": 17

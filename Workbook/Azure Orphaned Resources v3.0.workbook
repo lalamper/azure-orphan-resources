@@ -7400,7 +7400,7 @@
                   "type": 3,
                   "content": {
                     "version": "KqlItem/1.0",
-                    "query": "resources\r\n| where type =~ \"microsoft.web/connections\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| project subscriptionId, Resource = id , apiName = name, resourceGroup, tags, location\r\n| join kind = leftouter (\r\n    resources\r\n    | where type =~ 'microsoft.logic/workflows'\r\n    | extend resourceGroup, location, subscriptionId, properties\r\n    | extend var_json = properties[\"parameters\"][\"$connections\"][\"value\"]\r\n\t| mvexpand var_connection = var_json\r\n    | where notnull(var_connection)\r\n    | extend connectionId = extract(\"connectionId\\\":\\\"(.*?)\\\"\", 1, tostring(var_connection))\r\n    | project connectionId, name\r\n    )\r\n    on $left.Resource == $right.connectionId\r\n| where connectionId == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource, ResourceName=name, resourceGroup, location, tags, Details",
+                    "query": "resources\r\n| where type =~ \"microsoft.web/connections\"\r\n| where resourceGroup in~ ({ResourceGroup:value})\r\n| project subscriptionId, Resource = id , apiName = name, resourceGroup, tags, location\r\n| join kind = leftouter (\r\n    resources\r\n    | where type =~ 'microsoft.logic/workflows'\r\n    | extend resourceGroup, location, subscriptionId, properties\r\n    | extend var_json = properties[\"parameters\"][\"$connections\"][\"value\"]\r\n\t| mvexpand var_connection = var_json\r\n    | where notnull(var_connection)\r\n    | extend connectionId = extract(\"connectionId\\\":\\\"(.*?)\\\"\", 1, tostring(var_connection))\r\n    | project connectionId, name\r\n    )\r\n    on $left.Resource == $right.connectionId\r\n| where connectionId == \"\"\r\n| extend Details = pack_all()\r\n| project subscriptionId, Resource, apiName, resourceGroup, location, tags, Details",
                     "size": 3,
                     "title": "Orphaned API Connections",
                     "noDataMessage": "No orphaned API Connections found.",
@@ -7439,7 +7439,7 @@
                           "formatter": 5
                         },
                         {
-                          "columnMatch": "ResourceName",
+                          "columnMatch": "apiName",
                           "formatter": 5
                         },                        
                         {
